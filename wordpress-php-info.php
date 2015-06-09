@@ -88,7 +88,7 @@ class thissimyurl_WPPHPInfo {
 	function admin_menu() {
 		//XTEC ************ MODIFICAT - Made plugin only visible for superadmins.
 		//2015.04.09 @vsaavedr
-		if( is_super_admin() ) {
+		if( is_xtec_super_admin() ) {
 		//************ FI
 			add_options_page( __( 'WordPress phpinfo()', 'thisismyurl_wpphpinfo' ), __( 'WordPress phpinfo()', 'thisismyurl_wpphpinfo' ), 'manage_options', 'thisismyurl_wpphpinfo', array( $this, 'thisismyurl_wpphpinfo_page' ) );
 		}
