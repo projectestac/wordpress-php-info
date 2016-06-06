@@ -16,3 +16,47 @@ table.phpinfo {
 table.phpinfo td {
 	padding: 10;
 }
+#wpfooter {
+    position: relative;
+}
+#email_phpinfo {
+	width: 365px;
+	cursor: pointer;
+	margin: 0 auto;
+	padding: 25px;
+	font-size: 25px;
+	font-weight: bold;
+	text-align: center;
+	background: #777BB4;
+	color: #FFF;
+	border-radius: 10px;
+}
+#bgpopup {
+	background-color:rgba(0, 0, 0, 0.5);
+	width: 100%;
+	height: 100%;
+	z-index: 99998;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+}
+#emailme {
+	width: 350px;
+	padding: 15px;
+	background: pink;
+	margin: 0 auto;
+	z-index: 99999;
+	position: fixed;
+	top: 100px;
+	display: none;
+	left: 0;
+	right: 0;
+}
+#emailsent {
+	height: 30px;
+	background: #FFF;
+	border: solid 1px #000;
+	padding: 15px;
+	margin: 20px;
+}

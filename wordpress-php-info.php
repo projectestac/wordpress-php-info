@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: WordPress phpinfo()
-Plugin URI: http://thisismyurl.com/downloads/wordpress-phpinfo/
+Plugin URI: http://whoischris/wordpress-phpinfo.zip
 Description:  This simple plugin adds an option to an adminstrator's Tools menu which displays standard phpinfo() feedback details to the user.
-Author: Christopher Ross
-Version: 14.12
-Author URI: http://thisismyurl.com/
+Author: Chris Flannagan
+Version: 15
+Author URI: http://whoischris.com/
 */
 
 
@@ -14,10 +14,10 @@ Author URI: http://thisismyurl.com/
  *
  * This file contains all the logic required for the plugin
  *
- * @link		http://wordpress.org/extend/plugins/wordpress-phpinfo/
+ * @link		http://whoischris/wordpress-phpinfo.zip
  *
  * @package 	WordPress phpinfo()
- * @copyright	Copyright (c) 2008, Chrsitopher Ross
+ * @copyright	Copyright (c) 2016, Chris Flannagan
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License, v2 (or newer)
  *
  * @since 		WordPress phpinfo() 1.0
@@ -31,7 +31,7 @@ Author URI: http://thisismyurl.com/
 /**
  * Creates the Class for WordPress phpinfo() 
  *
- * @author     Christopher Ross <info@thisismyurl.com>
+ * @author     Chris Flannagan <chris@champoosa.com>
  * @version    Release: @14.11@
  * @see        wp_enqueue_scripts()
  * @since      Class available since Release 14.11
@@ -71,6 +71,7 @@ class thissimyurl_WPPHPInfo {
 
 			wp_register_style( 'thisismyurl-wpphpinfo', plugin_dir_url( __FILE__ ) . 'css/thisismyurl-admin.css', false, '14.12' );
 		    wp_enqueue_style( 'thisismyurl-wpphpinfo' );
+			wp_enqueue_script( 'flannyjs', plugin_dir_url( __FILE__ ) . 'js/phpinfo-js.js', array( 'jquery' ) );
 
 		}
 
@@ -91,7 +92,35 @@ class thissimyurl_WPPHPInfo {
 	
 
 	function thisismyurl_wpphpinfo_page() {
+
+		if( isset( $_REQUEST['sendtoemail'] ) ) {
+			$to = $_REQUEST['sendtoemail'];
+			$subject = 'WordPress User Submitted PHP Info()';
+			$body = $this->phpinfo_output_noecho();
+			$headers = array('Content-Type: text/html; charset=UTF-8');
+
+			wp_mail( $to, $subject, $body, $headers );
+
+			echo '<div id="emailsent"><h2>Email SENT! Be sure to tell receiver they may need to check their junk/spam folders for this information.</h2></div>';
+		}
+
 		?>
+
+		<div id="bgpopup"></div>
+		<div id="emailme">
+			<form action="" method="post">
+				<table>
+					<tr>
+						<td>Send to: </td>
+						<td><input type="text" name="sendtoemail" /></td>
+						<td><input type="submit" value="Send it!" /></td>
+					</tr>
+				</table>
+			</form>
+			<button id="closeemail" style="font-size:20px;font-weight:bold;background:#e968ff;color:#FFF;">
+				Close This Window
+			</button>
+		</div>
 		<div class="wrap">
 			<div class="thisismyurl-icon32"><br /></div>
 			<h2><?php _e( 'WordPress phpinfo()', 'thisismyurl_wpphpinfo' ); ?></h2>
@@ -99,13 +128,16 @@ class thissimyurl_WPPHPInfo {
 
 			<h3><?php _e( 'General Settings', 'thisismyurl_wpphpinfo' ); ?></h3>
 			<p><?php printf( __( 'The plugin has no settings, once activated it will work automattically. For further details, please view the <a href="%sreadme.txt">readme.txt</a> file included with this release.', 'thisismyurl_wpphpinfo' ), plugin_dir_url( __FILE__ ) ); ?></p>
+			<p style="width: 100%;"><button id="email_phpinfo">Email This Information</button></p>
 			<?php $this->phpinfo_output(); ?>
+			<br style='clear:both;' />
+			Plugin adopted by <a href='http://whoischris.com'>Chris Flannagan</a>.
 		</div>
 		<?php
 	}
 
 	function phpinfo_output() {
-		
+
 		ob_start();
 		phpinfo(-1);
 		$phpinfo_content = ob_get_contents();
@@ -117,7 +149,7 @@ class thissimyurl_WPPHPInfo {
 		if ( ! empty( $phpinfo_array ) ) {
 			unset( $phpinfo_array[0] );
 			foreach ( $phpinfo_array as $phpinfo_element ) {
-				
+
 				$phpinfo_element = str_replace( '<tr', '<tr valign="top"', $phpinfo_element );
 
 				echo '<table class="phpinfo" ' . $phpinfo_element;
@@ -127,7 +159,32 @@ class thissimyurl_WPPHPInfo {
 		}
 	}
 
- 
+	function phpinfo_output_noecho() {
+		$myreturn = '';
+		ob_start();
+		phpinfo(-1);
+		$phpinfo_content = ob_get_contents();
+		ob_end_clean();
+
+		if ( ! empty( $phpinfo_content ) )
+			$phpinfo_array = explode( '<table', $phpinfo_content );
+
+		if ( ! empty( $phpinfo_array ) ) {
+			unset( $phpinfo_array[0] );
+			foreach ( $phpinfo_array as $phpinfo_element ) {
+
+				$phpinfo_element = str_replace( '<tr', '<tr valign="top"', $phpinfo_element );
+
+				$myreturn .= '<table class="phpinfo" ' . $phpinfo_element;
+				$myreturn .= '<div style="clear:both"></div>';
+			}
+
+		}
+		return $myreturn;
+	}
+
+
+
 }
 
 $thissimyurl_WPPHPInfo = new thissimyurl_WPPHPInfo;
@@ -159,7 +216,7 @@ function thisismyurl_wpphpinfo_plugin_action_links( $links, $file ) {
 
 	if( $file == $this_plugin ){
 		$links[] = '<a href="options-general.php?page=thisismyurl_wpphpinfo">' . __( 'phpinfo()', 'thisismyurl_wpphpinfo' ) . '</a>';
-		$links[] = '<a href="http://thisismyurl.com/downloads/wordpress-phpinfo/">' . __( 'Author', 'thisismyurl_wpphpinfo' ) . '</a>';
+		$links[] = '<a href="http://whoischris/wordpress-phpinfo.zip">' . __( 'Author', 'thisismyurl_wpphpinfo' ) . '</a>';
 	}
 	return $links;
 }

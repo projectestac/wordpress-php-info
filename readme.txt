@@ -1,11 +1,11 @@
 === WordPress phpinfo() ===
-Contributors: christopherross,thisismyurl
+Contributors: MrFlannagan
 Plugin URI: http://thisismyurl.com/downloads/wordpress-phpinfo/
 Donate link:  http://thisismyurl.com/downloads/
 Tags: simple, php, admin, phpinfo,debugging, configuration, server, support, troubleshooting
 Requires at least: 3.2.0
-Tested up to: 4.1.0
-Stable tag: 14.12
+Tested up to: 4.5.2
+Stable tag: 15
 
 It's important for a non technical administrator to be able to diagnose server related problems in WordPress.
 
