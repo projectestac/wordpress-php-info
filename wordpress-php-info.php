@@ -29,8 +29,13 @@ function thisismyurl_php_info_wordpress_menu() {
 	$thisismyurl_php_info_settings = add_management_page( 'phpinfo()', 'phpinfo()', 'edit_posts', 'thisismyurl_php_info', 'thisismyurl_php_info_wordpress_options' );
 	add_action( 'load-'.$thisismyurl_php_info_settings, 'thisismyurl_php_info_wordpress_scripts' );
 }
-add_action( 'admin_menu', 'thisismyurl_php_info_wordpress_menu' );
-
+//XTEC ************ AFEGIT - Made plugin only visible for superadmins. - 19.03.23 @svallde2
+if( is_xtec_super_admin() ) {
+    //*********************** FI
+    add_action('admin_menu', 'thisismyurl_php_info_wordpress_menu');
+    //XTEC *********** AFEGIT
+}
+//******************* FI
 
 function thisismyurl_php_info_wordpress_scripts() {
 	wp_enqueue_style( 'dashboard' );
@@ -46,7 +51,6 @@ function thisismyurl_php_info_wordpress_scripts() {
 }
 
 function thisismyurl_php_info_wordpress_options() {
-
 	if ( $_POST ) {
 		$setting = array( $_POST['setting1'], $_POST['setting2'], $_POST['setting3'] );
 		update_option( 'thisismyurl_php_info', json_encode( $setting ) );
