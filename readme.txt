@@ -1,11 +1,11 @@
-=== WordPress phpinfo() ===
-Contributors: MrFlannagan
-Plugin URI: http://thisismyurl.com/downloads/wordpress-phpinfo/
-Donate link:  http://thisismyurl.com/downloads/
+=== Plugin Name ===
+Contributors: christopherross
+Plugin URI: http://thisismyurl.com/plugins/wordpress-phpinfo/
+Donate link:  http://thisismyurl.com/
 Tags: simple, php, admin, phpinfo,debugging, configuration, server, support, troubleshooting
-Requires at least: 3.2.0
-Tested up to: 4.5.2
-Stable tag: 15
+Requires at least: 3.0.0
+Tested up to: 3.5.1
+Stable tag: 3.5.2
 
 It's important for a non technical administrator to be able to diagnose server related problems in WordPress.
 
@@ -20,7 +20,7 @@ This plugin is maintained by Christopher Ross, http://thisismyurl.com or you can
 
 == Updates ==
 
-Updates to the plugin will be posted here, to [Christopher Ross](http://thisismyurl.com/downloads/wordpress-phpinfo/)
+Updates to the plugin will be posted here, to [Christopher Ross](http://thisismyurl.com/plugins/wordpress-phpinfo/)
 
 == Screenshots ==
 
@@ -44,14 +44,10 @@ To call the function from a theme include the code wordpressphpinfo(); in your t
 
 == Donations ==
 
-If you would like to donate to help support future development of this tool, please visit [http://thisismyurl.com/downloads/wordpress-phpinfo/
+If you would like to donate to help support future development of this tool, please visit [Christopher Ross](http://thisismyurl.com/plugins/wordpress-phpinfo/)
 
 
 == Change Log ==
-
-14.12
-* tested to WordPress 4.1
-* streamlined the output screen to display more raw data
 
 3.5
 * updated WP admin screens
@@ -100,6 +96,6 @@ Added the change log
 
 == Upgrade Notice ==
 
-14.12
-* tested to WordPress 4.1
-* streamlined the output screen to display more raw data
+3.0.01
+* converted plugin to utilize CR common library
+* altered phpinfo() output to avoid theme conflicts
