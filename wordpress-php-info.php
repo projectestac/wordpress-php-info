@@ -26,16 +26,18 @@ Author URI: http://thisismyurl.com/
 
 // add menu to WP admin
 function thisismyurl_php_info_wordpress_menu() {
+
+    // XTEC ************ AFEGIT - Restrict access to xtecadmin
+    // 19.06.26 @aginard
+    if (!is_xtec_super_admin()) {
+        return false;
+    }
+    //******************* FI
+
 	$thisismyurl_php_info_settings = add_management_page( 'phpinfo()', 'phpinfo()', 'edit_posts', 'thisismyurl_php_info', 'thisismyurl_php_info_wordpress_options' );
 	add_action( 'load-'.$thisismyurl_php_info_settings, 'thisismyurl_php_info_wordpress_scripts' );
 }
-//XTEC ************ AFEGIT - Made plugin only visible for superadmins. - 19.03.23 @svallde2
-if( is_xtec_super_admin() ) {
-    //*********************** FI
-    add_action('admin_menu', 'thisismyurl_php_info_wordpress_menu');
-    //XTEC *********** AFEGIT
-}
-//******************* FI
+add_action('admin_menu', 'thisismyurl_php_info_wordpress_menu');
 
 function thisismyurl_php_info_wordpress_scripts() {
 	wp_enqueue_style( 'dashboard' );
